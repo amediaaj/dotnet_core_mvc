@@ -18,6 +18,8 @@ namespace MiddlewareExample.CustomMiddleware
         public async Task Invoke(HttpContext httpContext)
         {
             // before logic
+
+            // Stream reader for reading from body
             System.IO.StreamReader reader = new StreamReader(httpContext.Request.Body);
             string body = await reader.ReadToEndAsync();
             Dictionary<string, StringValues> queryDict =
