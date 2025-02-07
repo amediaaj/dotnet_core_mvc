@@ -1,0 +1,25 @@
+﻿
+using System.Runtime.CompilerServices;
+
+namespace MiddlewareExample.CustomMiddleWare
+{
+    public class MyCustomMiddleware : IMiddleware
+    {
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        {
+            // Do something before
+            await context.Response.WriteAsync("My Custom Middleware - Starts\n");
+            await next(context);
+            // Do something after
+            await context.Response.WriteAsync("My Custom Middleware - Ends\n");
+        }
+    }
+
+    public static class CustomMiddlewareExtension
+    {
+        public static IApplicationBuilder UseMyCustomMiddleware(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<MyCustomMiddleware>();
+        }
+    }
+}

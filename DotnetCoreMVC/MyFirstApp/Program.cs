@@ -21,6 +21,7 @@ app.Run(async (HttpContext context) => {
             foreach(var firstName in queryDict["firstName"])
             {
                 await context.Response.WriteAsync(firstName);
+                // await context.Response.WriteAsync($"<h1>{firstName}</h1>");
             }
         }
     }
