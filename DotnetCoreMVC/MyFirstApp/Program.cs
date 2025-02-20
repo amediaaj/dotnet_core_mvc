@@ -13,12 +13,12 @@ app.Run(async (HttpContext context) => {
     Dictionary<string, StringValues> queryDict =
     Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(body);
 
-    if (queryDict.ContainsKey("firstName"))
+    if (queryDict.ContainsKey("age"))
     {
         // string firstName = queryDict["firstName"][0];
-        foreach (var firstName in queryDict["firstName"])
+        foreach (var age in queryDict["age"])
         {
-            await context.Response.WriteAsync(firstName);
+            await context.Response.WriteAsync($"{age }");
             // await context.Response.WriteAsync($"<h1>{firstName}</h1>");
         }
     }
