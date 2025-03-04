@@ -25,28 +25,32 @@ app.UseEndpoints(endpoints => {
         await context.Response.WriteAsync($"In files: {fileName} - {extension}");
     });
 
+    // Constraint
+    // "{parameter:constraint}"
     // Default Parameter
     // "{parameter=dafault_value}"
     // Eg: employee/profile/defaultname
-    endpoints.Map("employees/profile/{employeename=defaultname}", async (context) => {
+    endpoints.Map("employees/profile/{employeename:alpha:length(4, 7)=defaultname}", async (context) => {
         string? employeeName = Convert.ToString(context.Request.RouteValues["employeename"]);
         await context.Response.WriteAsync($"In employees profile: {employeeName}");
     });
 
     // Constraint
+    // "{parameter:constraint}"
+    // Constraint
     // "{parameter:type}"
     // Optional Route Parameter
     // "{parameter?}"
     // Eg: products/details/1
-    endpoints.Map("products/detail/{id:int?}", async (context) => {
+    endpoints.Map("products/details/{id:int:range(1, 1000)?}", async (context) => {
         // Will contain key id only if value for id was supplied
         if(context.Request.RouteValues.ContainsKey("id"))
         {
             int? id = Convert.ToInt32(context.Request.RouteValues["id"]);
-            await context.Response.WriteAsync($"In products detail: {id}");
+            await context.Response.WriteAsync($"In products details: {id}");
         } else
         {
-            await context.Response.WriteAsync($"In products detail: id is not supplied");
+            await context.Response.WriteAsync($"In products details: id is not supplied");
         }
     });
 
@@ -67,11 +71,27 @@ app.UseEndpoints(endpoints => {
         await context.Response.WriteAsync($"City information: {cityId}");
     });
 
+    //sales-report/2030/apr
+    endpoints.Map("sales-report/{year:int:min(1900)}/{month:regex(^(apr|jul|oct|jan)$)}", async context => {
+        int year = Convert.ToInt32(context.Request.RouteValues["year"]);
+        string? month = Convert.ToString(context.Request.RouteValues["month"]);
+
+        if(month == "apr" || month == "jul" || month == "oct" || month == "jan")
+        {
+            await context.Response.WriteAsync($"sales report - {year} - {month}");
+        }
+        else
+        {
+            await context.Response.WriteAsync($"{month} is not allowed.");
+        }
+        
+    });
+
 });
 
 // Will only execute if the URL is not one that is mapped
 app.Run(async context => {
-    await context.Response.WriteAsync($"Request recieived at {context.Request.Path}");
+    await context.Response.WriteAsync($"No route matched at {context.Request.Path}");
 });
 
 app.Run();
