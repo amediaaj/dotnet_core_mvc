@@ -1,20 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-// endpoint null because this method is called before UseRouting
-app.Use(async (context, next) => {
-    Microsoft.AspNetCore.Http.Endpoint? endpoint = context.GetEndpoint();
-    if(endpoint != null)
-    {
-        await context.Response.WriteAsync($"Endpoint: {endpoint.DisplayName}\n");
-    }
-
-    await next(context);
-});
-
 // enable routing
 app.UseRouting();
-
 
 // endpoint not null if the url and http method matches an endpoint
 app.Use(async (context, next) => {
@@ -29,29 +17,22 @@ app.Use(async (context, next) => {
 
 // creating endpoints
 app.UseEndpoints(endpoints => {
-    // add your end points
-    endpoints.MapGet("map1", async (context) => {
-        await context.Response.WriteAsync("In Map 1");
+    // URL must match files.{filename},{extension}
+    endpoints.Map("files/{filename}.{extension}", async (context) => {
+        string? fileName = Convert.ToString(context.Request.RouteValues["filename"]);
+        string? extension = Convert.ToString(context.Request.RouteValues["extension"]);
+
+        await context.Response.WriteAsync($"In files: {fileName} - {extension}");
+    });
+
+    endpoints.Map("employee/profile/{employeename}", async (context) => {
+        string? employeeName = Convert.ToString(context.Request.RouteValues["employeename"]);
+        await context.Response.WriteAsync($"In employee profile: {employeeName}");
     });
 
 });
 
-app.UseEndpoints(endpoints => {
-    // add your end points
-    endpoints.MapPost("map2", async (context) => {
-        await context.Response.WriteAsync("In Map 2");
-    });
-
-});
-
-app.UseEndpoints(endpoints => {
-    // add your end points
-    endpoints.Map("map3", async (context) => {
-        await context.Response.WriteAsync("In Map 3");
-    });
-
-});
-
+// Will only execute if the URL is not one that is mapped
 app.Run(async context => {
     await context.Response.WriteAsync($"Request recieived at {context.Request.Path}");
 });
