@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFirstApp", "MyFirstApp\MyFirstApp.csproj", "{719EC9EA-6CB5-4830-87E5-72F08405DF7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddlewareExample", "MiddlewareExample\MiddlewareExample.csproj", "{A00AA6B2-540C-418D-A796-0E52996807B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingExample", "RoutingExample\RoutingExample.csproj", "{2C18F839-2DF1-457E-AB17-89E48C96FCBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{A00AA6B2-540C-418D-A796-0E52996807B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A00AA6B2-540C-418D-A796-0E52996807B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A00AA6B2-540C-418D-A796-0E52996807B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C18F839-2DF1-457E-AB17-89E48C96FCBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C18F839-2DF1-457E-AB17-89E48C96FCBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C18F839-2DF1-457E-AB17-89E48C96FCBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C18F839-2DF1-457E-AB17-89E48C96FCBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68A36443-4D70-41FA-86F3-A105973B292E}
 	EndGlobalSection
 EndGlobal
