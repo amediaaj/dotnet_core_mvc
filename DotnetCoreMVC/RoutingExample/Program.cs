@@ -18,16 +18,27 @@ app.Use(async (context, next) => {
 // creating endpoints
 app.UseEndpoints(endpoints => {
     // URL must match files.{filename},{extension}
-    endpoints.Map("files/{filename}.{extension}", async (context) => {
+    endpoints.Map("file/{filename}.{extension}", async (context) => {
         string? fileName = Convert.ToString(context.Request.RouteValues["filename"]);
         string? extension = Convert.ToString(context.Request.RouteValues["extension"]);
 
-        await context.Response.WriteAsync($"In files: {fileName} - {extension}");
+        await context.Response.WriteAsync($"In file: {fileName} - {extension}");
     });
 
-    endpoints.Map("employee/profile/{employeename}", async (context) => {
+    // Default Parameter
+    // "{parameter=dafault_value}"
+    // Eg: employee/profile/defaultname
+    endpoints.Map("employee/profile/{employeename=defaultname}", async (context) => {
         string? employeeName = Convert.ToString(context.Request.RouteValues["employeename"]);
         await context.Response.WriteAsync($"In employee profile: {employeeName}");
+    });
+
+    // Default Parameter
+    // "{parameter=dafault_value}"
+    // Eg: products/details/1
+    endpoints.Map("product/detail/{id=1}", async (context) => {
+        int? id = Convert.ToInt32(context.Request.RouteValues["id"]);
+        await context.Response.WriteAsync($"In product detail: {id}");
     });
 
 });
