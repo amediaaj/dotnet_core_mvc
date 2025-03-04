@@ -33,10 +33,12 @@ app.UseEndpoints(endpoints => {
         await context.Response.WriteAsync($"In employee profile: {employeeName}");
     });
 
+    // Constraint
+    // "{parameter:type}"
     // Optional Route Parameter
     // "{parameter?}"
     // Eg: products/details/1
-    endpoints.Map("product/detail/{id?}", async (context) => {
+    endpoints.Map("product/detail/{id:int?}", async (context) => {
         // Will contain key id only if value for id was supplied
         if(context.Request.RouteValues.ContainsKey("id"))
         {
@@ -46,7 +48,14 @@ app.UseEndpoints(endpoints => {
         {
             await context.Response.WriteAsync($"In product detail: id is not supplied");
         }
+    });
 
+    // Constraint
+    // "{parameter:type}"
+    //Eg: daily-digest-report/{reportdate}
+    endpoints.Map("daily-digest-report/{reportdate:datetime}", async context => {
+        DateTime reportDate = Convert.ToDateTime(context.Request.RouteValues["reportdate"]);
+        await context.Response.WriteAsync($"In daily-digest-report: {reportDate.ToShortDateString()}");
     });
 
 });
