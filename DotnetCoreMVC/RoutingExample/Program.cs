@@ -33,12 +33,20 @@ app.UseEndpoints(endpoints => {
         await context.Response.WriteAsync($"In employee profile: {employeeName}");
     });
 
-    // Default Parameter
-    // "{parameter=dafault_value}"
+    // Optional Route Parameter
+    // "{parameter?}"
     // Eg: products/details/1
-    endpoints.Map("product/detail/{id=1}", async (context) => {
-        int? id = Convert.ToInt32(context.Request.RouteValues["id"]);
-        await context.Response.WriteAsync($"In product detail: {id}");
+    endpoints.Map("product/detail/{id?}", async (context) => {
+        // Will contain key id only if value for id was supplied
+        if(context.Request.RouteValues.ContainsKey("id"))
+        {
+            int? id = Convert.ToInt32(context.Request.RouteValues["id"]);
+            await context.Response.WriteAsync($"In product detail: {id}");
+        } else
+        {
+            await context.Response.WriteAsync($"In product detail: id is not supplied");
+        }
+
     });
 
 });
